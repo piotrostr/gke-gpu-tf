@@ -3,6 +3,7 @@ data "google_client_config" "provider" {}
 resource "google_container_cluster" "cluster" {
   name     = "cluster"
   location = "us-central1-a"
+  initial_node_count = 1
 }
 
 provider "kubernetes" {
@@ -18,7 +19,11 @@ resource "google_container_node_pool" "cpu_intensive" {
   cluster    = google_container_cluster.cluster.name
   node_count = 1
   node_config {
-    taint = "GPU=true:effect=NoSchedule"
+    taint = [ {
+      key = "GPU"
+      value = "true"
+      effect = "NO_SCHEDULE"
+    } ]
     image_type = "n2-highcpu-16"
   }
 }
@@ -29,7 +34,11 @@ resource "google_container_node_pool" "gpu_accelerated" {
   node_count = 1
   node_config {
     image_type = "n2-standard-4"
-    taint = "CPU=true:effect=NoSchedule"
+    taint = [ {
+      key = "CPU"
+      value = "true"
+      effect = "NO_SCHEDULE"
+    } ]
     guest_accelerator = [{
       count              = 1
       gpu_partition_size = "1g.5gb"
