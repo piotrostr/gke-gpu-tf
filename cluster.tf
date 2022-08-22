@@ -38,7 +38,7 @@ resource "google_container_node_pool" "gpu_accelerated" {
       key = "CPU"
       value = "true"
       effect = "NO_SCHEDULE"
-    } ]
+    }]
     guest_accelerator = [{
       count              = 1
       gpu_partition_size = "1g.5gb"
