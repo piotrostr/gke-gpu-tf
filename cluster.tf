@@ -4,6 +4,8 @@ resource "google_container_cluster" "cluster" {
   name               = "cluster"
   location           = "us-central1-a"
   initial_node_count = 1
+  // enable_tpu = true
+  // enable_autopilot = true
 }
 
 provider "kubernetes" {
@@ -25,8 +27,8 @@ resource "google_container_node_pool" "cpu_intensive" {
     preemptible = true
     image_type  = "ubuntu"
     taint = [{
-      key    = "GPU"
-      value  = "true"
+      key    = "nvidia.com/gpu"
+      value  = "ANY" // TODO
       effect = "NO_SCHEDULE"
     }]
   }
@@ -42,11 +44,6 @@ resource "google_container_node_pool" "gpu_accelerated" {
     preemptible  = true
     machine_type = "a2-highgpu-1g"
     image_type   = "ubuntu"
-    taint = [{
-      key    = "CPU"
-      value  = "true"
-      effect = "NO_SCHEDULE"
-    }]
     guest_accelerator = [{
       count              = 1
       gpu_partition_size = "1g.5gb"
