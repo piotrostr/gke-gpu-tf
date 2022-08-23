@@ -27,9 +27,10 @@ resource "google_container_node_pool" "cpu_intensive" {
     preemptible = true
     image_type  = "ubuntu"
     taint = [{
-      key    = "nvidia.com/gpu"
-      value  = "ANY" // TODO
-      effect = "NO_SCHEDULE"
+      key      = "nvidia.com/gpu"
+      effect   = "NO_SCHEDULE"
+      operator = "Any"
+      value    = 1
     }]
   }
 }
@@ -41,13 +42,16 @@ resource "google_container_node_pool" "gpu_accelerated" {
   location   = "us-central1-a"
 
   node_config {
+    metadata = {
+      "nvidia.com/gpu" = 1
+    }
     preemptible  = true
     machine_type = "a2-highgpu-1g"
     image_type   = "ubuntu"
     guest_accelerator = [{
-      count              = 1
       gpu_partition_size = "1g.5gb"
       type               = "nvidia-tesla-a100"
+      count              = 1
       // partitioning enables sharing gpu between pods unfortunately, there is
       // no option to use tesla t4 etc under kubernetes through terraform the
       // tesla a100 is the only supported
