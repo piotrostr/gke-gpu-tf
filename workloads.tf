@@ -5,21 +5,23 @@ resource "kubernetes_service" "cpu_api_service" {
       name = "cpu-api-service"
     }
   }
+
   spec {
+    type = "LoadBalancer" // or NodePort in case of using nginx Ingress
     selector = {
-      "name" = "CpuApi"
+      "name" = "cpu-api"
     }
+
     port {
-      port = 8080
+      port        = 8080
       target_port = 8080
     }
-    type = "LoadBalancer" // or NodePort in case of using nginx Ingress
   }
 }
 
 resource "kubernetes_deployment" "cpu_api" {
   metadata {
-    name = "CpuApi"
+    name = "cpu-api"
   }
 
   spec {
@@ -27,17 +29,25 @@ resource "kubernetes_deployment" "cpu_api" {
 
     selector {
       match_labels = {
-        "name" = "CpuApi"
+        "name" = "cpu-api"
       }
     }
 
     template {
+      metadata {}
+
       spec {
         container {
-          image = "piotrostr/where"
+          name  = "where-api"
+          image = "docker.io/piotrostr/where"
+
+          port {
+            container_port = 8080
+          }
         }
+
         toleration {
-          key = "CPU"
+          key   = "CPU"
           value = "true"
         }
       }
