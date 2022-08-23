@@ -23,7 +23,7 @@ resource "kubernetes_deployment" "cpu_api" {
       spec {
         container {
           name  = "where-api"
-          image = "docker.io/piotrostr/where"
+          image = "docker.io/piotrostr/hello-world"
 
           port {
             container_port = 8080
@@ -80,7 +80,7 @@ resource "kubernetes_deployment" "gpu_api" {
 
         container {
           name  = "cuda-smoke-api"
-          image = "gcr.io/piotrostr-resources/does-cuda-work"
+          image = "docker.io/piotrostr/does-cuda-work"
 
           port {
             container_port = 8000

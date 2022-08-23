@@ -45,11 +45,12 @@ resource "google_container_node_pool" "gpu_accelerated" {
 
     // Taints mean that pods will only get scheduled onto nodes of this pool
     // in case of the pods' toleration matching the key/value/effect below.
-    taint = [{
-      key    = "nvidia.com/gpu"
-      value  = "true"
-      effect = "NO_SCHEDULE"
-    }]
+    // taint = [{
+    //   key    = "nvidia.com/gpu"
+    //   value  = "true"
+    //   effect = "NO_SCHEDULE"
+    // }]
+    // this taint is added automatically by gke!
 
     // Partitioning enables sharing gpu between pods
     //
