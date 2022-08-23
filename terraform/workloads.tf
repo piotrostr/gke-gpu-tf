@@ -1,24 +1,3 @@
-resource "kubernetes_service" "cpu_api_service" {
-  metadata {
-    name = "cpu-api-service"
-    labels = {
-      name = "cpu-api-service"
-    }
-  }
-
-  spec {
-    type = "NodePort" // or NodePort in case of using nginx Ingress
-    selector = {
-      "name" = "cpu-api"
-    }
-
-    port {
-      port        = 8080
-      target_port = 8080
-    }
-  }
-}
-
 resource "kubernetes_deployment" "cpu_api" {
   metadata {
     name = "cpu-api"
@@ -42,11 +21,6 @@ resource "kubernetes_deployment" "cpu_api" {
       }
 
       spec {
-        toleration {
-          key      = "nvidia.com/gpu"
-          operator = "Exists"
-          effect   = "NoSchedule"
-        }
         container {
           name  = "where-api"
           image = "docker.io/piotrostr/where"
@@ -54,11 +28,6 @@ resource "kubernetes_deployment" "cpu_api" {
           port {
             container_port = 8080
           }
-        }
-
-        toleration {
-          key   = "CPU"
-          value = "true"
         }
       }
     }
@@ -88,12 +57,33 @@ resource "kubernetes_deployment" "gpu_api" {
       }
 
       spec {
+        // Matching the taint of the gpu node pool
+        toleration {
+          key    = "nvidia.com/gpu"
+          value  = "true"
+          effect = "NoSchedule"
+        }
+
+        // In case of future use with more node pools, also include affinity
+        // affinity {
+        //   node_affinity {
+        //     required_during_scheduling_ignored_during_execution {
+        //       node_selector_term {
+        //         match_expressions {
+        //           key = "nvidia.com/gpu"
+        //           operator = "Exists"
+        //         }
+        //       }
+        //     }
+        //   }
+        // }
+
         container {
-          name  = "where-api"
+          name  = "cuda-smoke-api"
           image = "gcr.io/piotrostr-resources/does-cuda-work"
 
           port {
-            container_port = 8080
+            container_port = 8000
           }
         }
       }
