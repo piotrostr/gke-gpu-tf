@@ -34,7 +34,12 @@ resource "kubernetes_deployment" "cpu_api" {
     }
 
     template {
-      metadata {}
+      metadata {
+        name = "cpu-api"
+        labels = {
+          "name" = "cpu-api"
+        }
+      }
 
       spec {
         container {
