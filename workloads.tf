@@ -79,6 +79,11 @@ resource "kubernetes_deployment" "cpu_api" {
       }
 
       spec {
+        toleration {
+          key      = "nvidia.com/gpu"
+          operator = "Exists"
+          effect   = "NoSchedule"
+        }
         container {
           name  = "where-api"
           image = "docker.io/piotrostr/where"
