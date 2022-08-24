@@ -47,7 +47,7 @@ resource "google_container_node_pool" "gpu_accelerated" {
     // in case of the pods' toleration matching the key/value/effect below.
     // taint = [{
     //   key    = "nvidia.com/gpu"
-    //   value  = "true"
+    //   value  = "exists"
     //   effect = "NO_SCHEDULE"
     // }]
     // this taint is added automatically by gke!

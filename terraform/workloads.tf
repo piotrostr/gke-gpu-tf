@@ -73,28 +73,13 @@ resource "kubernetes_deployment" "gpu_api" {
           effect = "NoSchedule"
         }
 
-        // In case of future use with more node pools, also include affinity
-        // affinity {
-        //   node_affinity {
-        //     required_during_scheduling_ignored_during_execution {
-        //       node_selector_term {
-        //         match_expressions {
-        //           key = "nvidia.com/gpu"
-        //           operator = "Exists"
-        //         }
-        //       }
-        //     }
-        //   }
-        // }
-
         affinity {
           node_affinity {
             required_during_scheduling_ignored_during_execution {
               node_selector_term {
                 match_expressions {
                   key = "nvidia.com/gpu"
-                  values = [ "present" ]
-                  operator = "In"
+                  operator = "Exists"
                 }
               }
             }
@@ -113,7 +98,7 @@ resource "kubernetes_deployment" "gpu_api" {
             limits = {
               cpu = "4000m"
               memory = "10Gi"
-              "nvidia.com/gpu" = "1"
+              // "nvidia.com/gpu" = "1"
             }
             requests = {
               cpu = "2000m"     // multiples of 5
