@@ -12,7 +12,7 @@ resource "kubernetes_ingress_v1" "ingress" {
       // host = "example.com"
       http {
         path {
-          path = "/cpu"
+          path = "/"
           backend {
             service {
               name = "cpu-api-service"
