@@ -83,4 +83,3 @@ resource "kubernetes_service" "gpu_api_service" {
     }
   }
 }
-

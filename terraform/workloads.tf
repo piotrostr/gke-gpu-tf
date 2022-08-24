@@ -33,7 +33,7 @@ resource "kubernetes_deployment" "cpu_api" {
               memory = "512Mi"
             }
             requests = {
-              cpu = "125m"     // multiples of 5
+              cpu    = "125m"  // multiples of 5
               memory = "256Mi" // multiples of 2
             }
           }
@@ -78,7 +78,7 @@ resource "kubernetes_deployment" "gpu_api" {
             required_during_scheduling_ignored_during_execution {
               node_selector_term {
                 match_expressions {
-                  key = "nvidia.com/gpu"
+                  key      = "nvidia.com/gpu"
                   operator = "Exists"
                 }
               }
@@ -96,13 +96,13 @@ resource "kubernetes_deployment" "gpu_api" {
 
           resources {
             limits = {
-              cpu = "4000m"
+              cpu    = "4000m"
               memory = "10Gi"
               // "nvidia.com/gpu" = "1"
             }
             requests = {
-              cpu = "2000m"     // multiples of 5
-              memory = "5Gi" // multiples of 2
+              cpu    = "2000m" // multiples of 5
+              memory = "5Gi"   // multiples of 2
             }
           }
         }

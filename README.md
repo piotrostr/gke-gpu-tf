@@ -28,7 +28,8 @@ gcloud container clusters get-credentials cluster \
   --region=us-central1-a
 ```
 
-Having authenticated into `kubectl`, the nvidia-drivers need to be installed. This can be done using the utility script from the root of the repo:
+Having authenticated into `kubectl`, the nvidia-drivers need to be installed.
+This can be done using the utility script from the root of the repo:
 
 ```sh
 ./install-nvidia-drivers.sh
