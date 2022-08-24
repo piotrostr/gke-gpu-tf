@@ -99,6 +99,7 @@ resource "kubernetes_deployment" "gpu_api" {
             limits = {
               cpu = "4000m"
               memory = "10Gi"
+              "nvidia.com/gpu" = "1"
             }
             requests = {
               cpu = "2000m"     // multiples of 5
