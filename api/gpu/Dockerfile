@@ -8,4 +8,5 @@ RUN python3 -m pip install -r requirements.txt
 
 COPY . .
 
-CMD [ "gunicorn", "-b", "0.0.0.0:8000", "app.main:app" ]
+ENV FLASK_APP "app.app:main"
+CMD ["flask", "run", "-p", "8000"]
