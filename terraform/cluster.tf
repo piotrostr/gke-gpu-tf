@@ -23,9 +23,10 @@ resource "google_container_node_pool" "cpu_intensive" {
   node_count = 1
 
   node_config {
-    // Machine_type is optional (will use the default value of e2-medium)
     preemptible = true
-    image_type  = "ubuntu"
+    // Machine_type is optional (will use the default value of e2-medium)
+    // Default image type is cos_containerd, it should stay this way (ubuntu is
+    // not as maintained)
   }
 }
 
