@@ -31,7 +31,7 @@ resource "kubernetes_ingress_v1" "ingress" {
               name = "gpu-api-service"
 
               port {
-                number = 8080
+                number = 8000
               }
             }
           }
@@ -72,6 +72,7 @@ resource "kubernetes_service" "gpu_api_service" {
   }
 
   spec {
+    type = "NodePort"
     selector = {
       "name" = "gpu-api"
     }
