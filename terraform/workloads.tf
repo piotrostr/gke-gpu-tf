@@ -30,6 +30,7 @@ resource "kubernetes_deployment" "cpu_api" {
           }
           resources {
             limits = {
+              cpu    = "250m"
               memory = "512Mi"
             }
             requests = {
