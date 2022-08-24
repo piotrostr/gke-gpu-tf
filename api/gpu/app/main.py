@@ -15,6 +15,6 @@ def get_cuda_info() -> dict or str:
     }
 
 
-@app.get("/")
-def home():
+@app.get("/gpu")
+def gpu():
     return get_cuda_info()
