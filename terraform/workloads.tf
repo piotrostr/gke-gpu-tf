@@ -97,13 +97,14 @@ resource "kubernetes_deployment" "gpu_api" {
 
           resources {
             limits = {
-              cpu    = "4000m"
-              memory = "10Gi"
-              // "nvidia.com/gpu" = "1"
+              cpu              = "4000m" // multiples of 5
+              memory           = "10Gi"  // multiples of 2
+              "nvidia.com/gpu" = 1       // there should be 7 units per a100
             }
             requests = {
-              cpu    = "2000m" // multiples of 5
-              memory = "5Gi"   // multiples of 2
+              cpu              = "2000m"
+              memory           = "5Gi"
+              "nvidia.com/gpu" = 1
             }
           }
         }

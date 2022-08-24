@@ -43,7 +43,15 @@ thus leaving the deployment of `gpu_api` stuck in the state as below.
 kubernetes_deployment.gpu_api: Still creating... [XXmXXs elapsed]
 ```
 
-As soon as the drivers are installed the pods get scheduled
+As soon as the drivers are installed the pods get scheduled.
+
+In order to verify the GPUs are available:
+
+```sh
+kubectl describe nodes | grep nvidia.com/gpu
+```
+
+should return the number of requests/limits for GPU units.
 
 The entire provisioning might take about 5-10 minutes as the resources involve
 an autopilot GKE cluster, NVIDIA A100 GPU node-pool and a HTTP Global Load
