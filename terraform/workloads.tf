@@ -4,7 +4,7 @@ resource "kubernetes_deployment" "cpu_api" {
   }
 
   spec {
-    replicas = 3
+    replicas = 5
 
     selector {
       match_labels = {
@@ -28,6 +28,15 @@ resource "kubernetes_deployment" "cpu_api" {
           port {
             container_port = 8080
           }
+          resources {
+            limits = {
+              memory = "512Mi"
+            }
+            requests = {
+              cpu = "125m"     // multiples of 5
+              memory = "256Mi" // multiples of 2
+            }
+          }
         }
       }
     }
@@ -40,7 +49,7 @@ resource "kubernetes_deployment" "gpu_api" {
   }
 
   spec {
-    replicas = 3
+    replicas = 5
 
     selector {
       match_labels = {
@@ -84,6 +93,17 @@ resource "kubernetes_deployment" "gpu_api" {
 
           port {
             container_port = 8000
+          }
+
+          resources {
+            limits = {
+              cpu = "4000m"
+              memory = "10Gi"
+            }
+            requests = {
+              cpu = "2000m"     // multiples of 5
+              memory = "5Gi" // multiples of 2
+            }
           }
         }
       }
