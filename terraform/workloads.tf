@@ -69,7 +69,7 @@ resource "kubernetes_deployment" "gpu_api" {
         // Matching the taint of the gpu node pool
         toleration {
           key    = "nvidia.com/gpu"
-          value  = "true"
+          value  = "present"
           effect = "NoSchedule"
         }
 
@@ -86,6 +86,20 @@ resource "kubernetes_deployment" "gpu_api" {
         //     }
         //   }
         // }
+
+        affinity {
+          node_affinity {
+            required_during_scheduling_ignored_during_execution {
+              node_selector_term {
+                match_expressions {
+                  key = "nvidia.com/gpu"
+                  values = [ "present" ]
+                  operator = "In"
+                }
+              }
+            }
+          }
+        }
 
         container {
           name  = "cuda-smoke-api"

@@ -40,7 +40,7 @@ resource "google_container_node_pool" "gpu_accelerated" {
     machine_type = "a2-highgpu-1g"
     image_type   = "ubuntu"
     labels = {
-      "nvidia.com/gpu" = "true"
+      "nvidia.com/gpu" = "present"
     }
 
     // Taints mean that pods will only get scheduled onto nodes of this pool
