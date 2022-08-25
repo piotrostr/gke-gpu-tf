@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# Note: this command will create a new nvidia-tesla-t4 per each node
 gcloud container clusters create tesla-t4-cluster \
   --accelerator type=nvidia-tesla-t4,count=1 \
   --autoprovisioning-scopes=https://www.googleapis.com/auth/logging.write,https://www.googleapis.com/auth/monitoring,https://www.googleapis.com/auth/devstorage.read_only,https://www.googleapis.com/auth/compute \
