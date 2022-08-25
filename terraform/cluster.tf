@@ -4,8 +4,8 @@ resource "google_container_cluster" "cluster" {
   name               = "cluster"
   location           = "us-central1-a"
   initial_node_count = 1
-  // enable_tpu = true
-  // enable_autopilot = true
+  enable_tpu = true
+  enable_autopilot = true
 }
 
 provider "kubernetes" {
@@ -24,9 +24,8 @@ resource "google_container_node_pool" "cpu_intensive" {
 
   node_config {
     preemptible = true
+    image_type   = "cos_containerd"
     // Machine_type is optional (will use the default value of e2-medium)
-    // Default image type is cos_containerd, it should stay this way (ubuntu is
-    // not as maintained)
   }
 }
 
@@ -38,8 +37,8 @@ resource "google_container_node_pool" "gpu_accelerated" {
 
   node_config {
     preemptible  = true
+    image_type   = "cos_containerd"
     machine_type = "a2-highgpu-1g"
-    image_type   = "ubuntu"
     labels = {
       "nvidia.com/gpu" = "present"
     }

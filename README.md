@@ -51,7 +51,8 @@ In order to verify the GPUs are available:
 kubectl describe nodes | grep nvidia.com/gpu
 ```
 
-should return the number of requests/limits for GPU units.
+should return the number of requests/limits for GPU units, as well as the
+capacity.
 
 The entire provisioning might take about 5-10 minutes as the resources involve
 an autopilot GKE cluster, NVIDIA A100 GPU node-pool and a HTTP Global Load
