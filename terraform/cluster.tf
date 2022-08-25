@@ -4,6 +4,31 @@ resource "google_container_cluster" "cluster" {
   name               = "cluster"
   location           = "us-central1-a"
   initial_node_count = 1
+
+  cluster_autoscaling {
+    enabled = true
+
+    resource_limits {
+      resource_type = "cpu"
+      minimum       = 1
+      maximum       = 8
+    }
+
+    resource_limits {
+      resource_type = "memory"
+      minimum       = 1
+      maximum       = 32
+    }
+
+    auto_provisioning_defaults {
+      oauth_scopes = [
+        "https://www.googleapis.com/auth/logging.write",
+        "https://www.googleapis.com/auth/monitoring",
+        "https://www.googleapis.com/auth/devstorage.read_only",
+        "https://www.googleapis.com/auth/compute",
+      ]
+    }
+  }
 }
 
 provider "kubernetes" {
@@ -39,22 +64,6 @@ resource "google_container_node_pool" "gpu_accelerated" {
       "nvidia.com/gpu" = "present"
     }
 
-    // Taints mean that pods will only get scheduled onto nodes of this pool
-    // in case of the pods' toleration matching the key/value/effect below.
-    // taint = [{
-    //   key    = "nvidia.com/gpu"
-    //   value  = "exists"
-    //   effect = "NO_SCHEDULE"
-    // }]
-    // this taint is added automatically by gke!
-
-    // Partitioning enables sharing gpu between pods
-    //
-    // Unfortunately, there is no option to use tesla t4 etc under kubernetes
-    // through terraform, the tesla a100 is the only gpu supported
-    //
-    // It is possible to create a cluster with smaller gpus through gcloud but
-    // then the partitioning is not possible
     guest_accelerator = [{
       gpu_partition_size = "1g.5gb"
       type               = "nvidia-tesla-a100"

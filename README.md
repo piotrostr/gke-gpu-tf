@@ -7,7 +7,7 @@ it for educational purposes, not as part of my employment.
 
 ## Setup
 
-Setup requires terraform with Google Cloud credentials. This cluster runs GPUs
+Setup requires Terraform with Google Cloud credentials. This cluster runs GPUs
 and exceeds the primary GCP quotas so the example won't work for new accounts.
 
 The `api/` directory contains two sample APIs of which images have been built
@@ -63,6 +63,29 @@ An important remark to make is that the GPU capability will only be available
 as long as the container runtime is docker, not containerd. This is a
 requirement of NVIDIA devices, more on that
 [here](https://kubernetes.io/docs/tasks/manage-gpus/scheduling-gpus/#official-nvidia-gpu-device-plugin).
+
+## Notes
+
+Taints mean that pods will only get scheduled onto nodes of this pool
+in case of the pods' toleration matching the key/value/effect below.
+
+```tf
+taint = [{
+  key    = "nvidia.com/gpu"
+  value  = "exists"
+  effect = "NO_SCHEDULE"
+}]
+```
+
+This taint is added automatically by GKE!
+
+Partitioning enables sharing gpu between pods.
+
+Unfortunately, there is no option to use Tesla T4 etc under Kubernetes
+through Terraform, the Tesla A100 is the only gpu supported.
+
+It is possible to create a cluster with smaller gpus through gcloud but
+then the partitioning is not possible.
 
 ## License
 
