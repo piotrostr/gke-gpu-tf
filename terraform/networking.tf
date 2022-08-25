@@ -1,4 +1,4 @@
-resource "kubernetes_ingress_v1" "ingress" {
+resource "kubernetes_ingress" "ingress" {
   metadata {
     name = "ingress"
     annotations = {
@@ -14,26 +14,16 @@ resource "kubernetes_ingress_v1" "ingress" {
         path {
           path = "/"
           backend {
-            service {
-              name = "cpu-api-service"
-
-              port {
-                number = 8080
-              }
-            }
+            service_name = "cpu-api-service"
+            service_port = 8080
           }
         }
 
         path {
           path = "/gpu"
           backend {
-            service {
-              name = "gpu-api-service"
-
-              port {
-                number = 8000
-              }
-            }
+            service_name = "gpu-api-service"
+            service_port = 8000
           }
         }
       }
