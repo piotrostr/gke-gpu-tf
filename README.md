@@ -59,6 +59,11 @@ an autopilot GKE cluster, NVIDIA A100 GPU node-pool and a HTTP Global Load
 Balancer. Terraform creates everything in sync, so the creation can be lengthy
 at times.
 
+An important remark to make is that the GPU capability will only be available
+as long as the container runtime is docker, not containerd. This is a
+requirement of NVIDIA devices, more on that
+[here](https://kubernetes.io/docs/tasks/manage-gpus/scheduling-gpus/#official-nvidia-gpu-device-plugin).
+
 ## License
 
 MIT

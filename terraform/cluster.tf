@@ -22,7 +22,6 @@ resource "google_container_node_pool" "cpu_intensive" {
 
   node_config {
     preemptible = true
-    image_type  = "cos_containerd"
     // Machine_type is optional (will use the default value of e2-medium)
   }
 }
@@ -35,7 +34,6 @@ resource "google_container_node_pool" "gpu_accelerated" {
 
   node_config {
     preemptible  = true
-    image_type   = "cos_containerd"
     machine_type = "a2-highgpu-1g"
     labels = {
       "nvidia.com/gpu" = "present"
