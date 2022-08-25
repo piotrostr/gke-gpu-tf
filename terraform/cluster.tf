@@ -4,8 +4,6 @@ resource "google_container_cluster" "cluster" {
   name               = "cluster"
   location           = "us-central1-a"
   initial_node_count = 1
-  enable_tpu = true
-  enable_autopilot = true
 }
 
 provider "kubernetes" {
@@ -24,7 +22,7 @@ resource "google_container_node_pool" "cpu_intensive" {
 
   node_config {
     preemptible = true
-    image_type   = "cos_containerd"
+    image_type  = "cos_containerd"
     // Machine_type is optional (will use the default value of e2-medium)
   }
 }
