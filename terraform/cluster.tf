@@ -58,6 +58,9 @@ resource "google_container_node_pool" "gpu_accelerated" {
   location   = "us-central1-a"
 
   node_config {
+    oauth_scopes = [
+      "https://www.googleapis.com/auth/devstorage.read_only",
+    ]
     preemptible  = true
     machine_type = "a2-highgpu-1g"
     labels = {
