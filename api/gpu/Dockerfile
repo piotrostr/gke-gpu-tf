@@ -9,4 +9,5 @@ RUN python3 -m pip install -r requirements.txt
 COPY . .
 
 ENV FLASK_APP "app.main:app"
+
 CMD ["flask", "run", "-p", "8000"]
