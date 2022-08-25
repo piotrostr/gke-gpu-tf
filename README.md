@@ -87,6 +87,12 @@ through Terraform, the Tesla A100 is the only gpu supported.
 It is possible to create a cluster with smaller gpus through gcloud but
 then the partitioning is not possible.
 
+## TODOs
+
+- Fix the Google Cloud Global HTTPS Load Balancer (broke after update from v1
+  to latest, could rollback to
+  [1a41747b53a9c0905afa4f4793f0a3224dc7b935](https://github.com/piotrostr/gke-tf/commit/1a41747b53a9c0905afa4f4793f0a3224dc7b935))
+
 ## License
 
 MIT
