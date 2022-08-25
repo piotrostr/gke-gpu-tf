@@ -4,31 +4,6 @@ resource "google_container_cluster" "cluster" {
   name               = "cluster"
   location           = "us-central1-a"
   initial_node_count = 1
-
-  cluster_autoscaling {
-    enabled = true
-
-    resource_limits {
-      resource_type = "cpu"
-      minimum       = 1
-      maximum       = 8
-    }
-
-    resource_limits {
-      resource_type = "memory"
-      minimum       = 1
-      maximum       = 32
-    }
-
-    auto_provisioning_defaults {
-      oauth_scopes = [
-        "https://www.googleapis.com/auth/logging.write",
-        "https://www.googleapis.com/auth/monitoring",
-        "https://www.googleapis.com/auth/devstorage.read_only",
-        "https://www.googleapis.com/auth/compute",
-      ]
-    }
-  }
 }
 
 provider "kubernetes" {
