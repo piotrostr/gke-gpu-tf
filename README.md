@@ -1,4 +1,10 @@
-# gke-tf
+# gke-gpu-tf
+
+An example of how to provision a cluster with a mix of GPU and CPU APIs, with
+both Terraform and `gcloud` command-line tool examples.
+
+See the `api/gpu` and `api/cpu` for the sample APIs and the `gcloud` and
+`terraform` directories for the deployment procedures.
 
 ## Disclaimer
 
